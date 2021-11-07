@@ -112,7 +112,7 @@ function App() {
 
     return (
         <div>
-            <div>Total!: {listInfo.totalCnt}</div>
+            <div>Total: {listInfo.totalCnt}</div>
             <span>Page Size </span>
             <select name="size" value={searchParams.size} onChange={(e) => setListSize(e)}>
                 <option value={5}>5</option>
