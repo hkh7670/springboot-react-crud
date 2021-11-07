@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.pointer {
+  cursor: pointer;
+  margin-top: 5px;
+  margin-left: 5px;
+}

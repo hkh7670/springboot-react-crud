@@ -8,6 +8,7 @@ function App() {
     const [searchParams, setSearchParams] = useState({ page: 0, size: 5, title: '', content: '' });
     const [listInfo, setListInfo] = useState({ totalCnt: 0, value: { content: [] } })
     const [totalPagesValues, setTotalPagesValues] = useState([]);
+    const [pageCnt, setPageCnt] = useState(5);
 
     useEffect(() => {
         getPostList();
@@ -79,9 +80,39 @@ function App() {
         }
     }
 
+    function handlePageMove(type) {
+        let page;
+        if(totalPagesValues.length <= 0) {
+            page = 0;
+        }
+        else {
+            switch (type){
+                case "prevEnd":
+                    page = 0;
+                    break;
+                case "prev":
+                    page = searchParams.page === 0 ? 0 : searchParams.page - 1;
+                    break;
+                case "next":
+                    page = searchParams.page === totalPagesValues.length - 1 ? totalPagesValues.length - 1 : searchParams.page + 1;
+                    break;
+                case "nextEnd":
+                    page = totalPagesValues.length - 1;
+                    break;
+                default:
+                    page = 0;
+                    break;
+            }
+        }
+        setSearchParams({
+            ...searchParams,
+            page: page
+        })
+    }
+
     return (
         <div>
-            <div>Total: {listInfo.totalCnt}</div>
+            <div>Total!: {listInfo.totalCnt}</div>
             <span>Page Size </span>
             <select name="size" value={searchParams.size} onChange={(e) => setListSize(e)}>
                 <option value={5}>5</option>
@@ -111,16 +142,24 @@ function App() {
                 })}
             </table>
             <div>
-                {totalPagesValues.map((item, i) => {
-                    return (
-                        <Fragment>
-                            <span onClick={() => setPages(i)}>{i + 1} </span>
-                        </Fragment>
-                    )
-                })}
+                <button className={"pointer"} onClick={() => handlePageMove("prevEnd")}>{" << "}</button>
+                <button className={"pointer"} onClick={() => handlePageMove("prev")}>{" < "}</button>
+                {
+                    totalPagesValues.map((item, i) => {
+                        if(parseInt(i / pageCnt) === parseInt(searchParams.page / pageCnt)) {
+                            if (i === searchParams.page) {
+                                return <Fragment><span className={"pointer"} style={{color: "red"}} onClick={() => setPages(i)}>{i + 1} </span></Fragment>
+                            }
+                            return <Fragment><span className={"pointer"} onClick={() => setPages(i)}>{i + 1} </span></Fragment>
+                        }
+                    })
+                }
+                <button className={"pointer"} onClick={() => handlePageMove("next")}>{" > "}</button>
+                <button className={"pointer"} onClick={() => handlePageMove("nextEnd")}>{" >> "}</button>
+
             </div>
             <div>
-                <input name="title" onChange={(e) => handleSearchParams(e)} onKeyPress={handleEnterKeyPress}/>
+                <input name="title" onChange={(e) => handleSearchParams(e)} onKeyPress={(e) => handleEnterKeyPress(e)}/>
                 <button onClick={handleFormSubmit}>조회</button>
             </div>
         </div>
