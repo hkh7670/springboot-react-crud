@@ -43,7 +43,7 @@ public class BoardRepositoryCustomImpl extends QuerydslRepositorySupport impleme
                 .where(likeTitle(boardDto.getTitle()),
                         eqId(boardDto.getId())
                 )
-                .orderBy(boardEntity.title.desc());
+                .orderBy(boardEntity.regDate.desc(), boardEntity.title.desc());
         return new PageImpl<>(getQuerydsl().applyPagination(pageable, query).fetch(), pageable, query.fetchCount());
     }
 
