@@ -2,9 +2,10 @@ import React, { Fragment, useState } from "react";
 
 function Pagination(props) {
     const [pageCnt, setPageCnt] = useState(5);
+    const { totalPagesValues, searchParams, setSearchParams } = props;
     function handlePageMove(type) {
         let page;
-        if(props.totalPagesValues.length <= 0) {
+        if(totalPagesValues.length <= 0) {
             page = 0;
         }
         else {
@@ -13,28 +14,28 @@ function Pagination(props) {
                     page = 0;
                     break;
                 case "prev":
-                    page = props.searchParams.page === 0 ? 0 : props.searchParams.page - 1;
+                    page = searchParams.page === 0 ? 0 : searchParams.page - 1;
                     break;
                 case "next":
-                    page = props.searchParams.page === props.totalPagesValues.length - 1 ? props.totalPagesValues.length - 1 : props.searchParams.page + 1;
+                    page = searchParams.page === totalPagesValues.length - 1 ? totalPagesValues.length - 1 : searchParams.page + 1;
                     break;
                 case "nextEnd":
-                    page = props.totalPagesValues.length - 1;
+                    page = totalPagesValues.length - 1;
                     break;
                 default:
                     page = 0;
                     break;
             }
         }
-        props.setSearchParams({
-            ...props.searchParams,
+        setSearchParams({
+            ...searchParams,
             page: page
         })
     }
 
     function setPages(page) {
-        props.setSearchParams({
-            ...props.searchParams,
+        setSearchParams({
+            ...searchParams,
             page: page
         })
     }
@@ -44,9 +45,9 @@ function Pagination(props) {
             <button className={"pointer"} onClick={() => handlePageMove("prevEnd")}>{"<<"}</button>
             <button className={"pointer"} onClick={() => handlePageMove("prev")}>{"<"}</button>
             {
-                props.totalPagesValues.map((item, i) => {
-                    if (parseInt((i / pageCnt).toString()) === parseInt((props.searchParams.page / pageCnt).toString())) {
-                        if (i === props.searchParams.page) {
+                totalPagesValues.map((item, i) => {
+                    if (parseInt((i / pageCnt).toString()) === parseInt((searchParams.page / pageCnt).toString())) {
+                        if (i === searchParams.page) {
                             return <Fragment><span className={"pointer"} style={{ color: "red" }}
                                                    onClick={() => setPages(i)}>{i + 1} </span></Fragment>
                         }
