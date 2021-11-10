@@ -95,7 +95,7 @@ function App() {
             <div>Total: {listInfo.totalCnt}</div>
             <table border="1">
                 <TableHeader tableHeader={tableHeader}/>
-                <TableContents content={listInfo.value.content} tableHeaderSize={Object.keys(tableHeader).length} />
+                <TableContents content={listInfo.value.content} tableHeaderLength={Object.keys(tableHeader).length} />
             </table>
             <Pagination searchParams={searchParams} setSearchParams={setSearchParams}
                         totalPagesValues={totalPagesValues}/>

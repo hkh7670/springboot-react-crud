@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 
 function TableContents(props) {
-    const { content, tableHeaderSize } = props;
+    const { content, tableHeaderLength } = props;
     return (
         <Fragment>
             {content.map((item, i) => {
@@ -19,7 +19,7 @@ function TableContents(props) {
                 )
             })}
             {content.length === 0 && <tr>
-                <td className={"text_center"} colSpan={tableHeaderSize}>No Result</td>
+                <td className={"text_center"} colSpan={tableHeaderLength}>No Result</td>
             </tr>}
         </Fragment>
     )
