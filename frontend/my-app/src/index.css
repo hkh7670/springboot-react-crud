@@ -17,3 +17,14 @@ code {
   margin-top: 5px;
   margin-left: 5px;
 }
+
+.center-align {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text_center {
+  text-align: center;
+}

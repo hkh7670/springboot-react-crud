@@ -1,17 +1,26 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import './App.css';
 import { boardApi } from "./api/BoardApi";
-import Pagination from "./Pagination";
+import Pagination from "./common/Pagination";
+import TableHeader from "./common/TableHeader";
+import TableContents from "./common/TableContents";
 
 function App() {
 
-    const [searchParams, setSearchParams] = useState({ page: 0, size: 5, title: '', content: '' });
+    const [searchParams, setSearchParams] = useState({ page: 0, size: 3, title: '', content: '' });
     const [listInfo, setListInfo] = useState({ totalCnt: 0, value: { content: [] } })
     const [totalPagesValues, setTotalPagesValues] = useState([]);
+    const isMounted = useRef(false);
 
-    useEffect(() => {
-        getPostList();
-    }, [])
+    const tableHeader = {
+        No: { columnName: "No." },
+        userId: { columnName: "User ID" },
+        title: { columnName: "Title" },
+        content: { columnName: "Content" },
+        regDate: { columnName: "Reg Date" },
+        uptDate: { columnName: "Upt Date" },
+    }
+
 
     useEffect(() => {
         const totalPagesValues = [];
@@ -23,11 +32,13 @@ function App() {
     }, [listInfo])
 
     useEffect(() => {
-        console.log("totalPagesValues : ", totalPagesValues);
-    }, [totalPagesValues])
-
-    useEffect(() => {
-        getPostList();
+        console.log("tableHeader : ", tableHeader);
+        if (isMounted.current) {
+            getPostList();
+        }
+        else {
+            isMounted.current = true;
+        }
     }, [searchParams.page, searchParams.size])
 
     function setListSize(e) {
@@ -73,38 +84,22 @@ function App() {
     }
 
     return (
-        <div>
-            <div>Total: {listInfo.totalCnt}</div>
+        <div className={"center-align"}>
             <span>Page Size </span>
             <select name="size" value={searchParams.size} onChange={(e) => setListSize(e)}>
+                <option value={3}>3</option>
                 <option value={5}>5</option>
                 <option value={10}>10</option>
                 <option value={20}>20</option>
             </select>
+            <div>Total: {listInfo.totalCnt}</div>
             <table border="1">
-                <th>No.</th>
-                <th>USER ID</th>
-                <th>TITLE</th>
-                <th>CONTENT</th>
-                <th>REG DATE</th>
-                <th>UPT DATE</th>
-                {listInfo.value.content.map((item, i) => {
-                    return (
-                        <Fragment>
-                            <tr>
-                                <td>{i + 1}</td>
-                                <td>{item.userId}</td>
-                                <td>{item.title}</td>
-                                <td>{item.content}</td>
-                                <td>{item.regDate}</td>
-                                <td>{item.uptDate}</td>
-                            </tr>
-                        </Fragment>
-                    )
-                })}
+                <TableHeader tableHeader={tableHeader}/>
+                <TableContents content={listInfo.value.content} tableHeaderSize={Object.keys(tableHeader).length} />
             </table>
-            <Pagination searchParams={searchParams} setSearchParams={setSearchParams} totalPagesValues={totalPagesValues} />
-            <div>
+            <Pagination searchParams={searchParams} setSearchParams={setSearchParams}
+                        totalPagesValues={totalPagesValues}/>
+            <div style={{marginTop: '10px'}}>
                 <input name="title" onChange={(e) => handleSearchParams(e)} onKeyPress={(e) => handleEnterKeyPress(e)}/>
                 <button onClick={handleFormSubmit}>조회</button>
             </div>
