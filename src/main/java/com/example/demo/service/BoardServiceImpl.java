@@ -5,6 +5,7 @@ import com.example.demo.dto.PageBaseResponse;
 import com.example.demo.entity.BoardEntity;
 import com.example.demo.repository.BoardRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
@@ -50,13 +51,13 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardDto getPostOne(Long seq) {
         BoardEntity entity = boardRepository.findById(seq).orElseThrow(NullPointerException::new);
-        return entity.toDto();
+        return new BoardDto(entity);
     }
 
     @Override
     @Transactional
     public BoardDto insertPost(BoardDto dto) {
-        return boardRepository.save(dto.toEntity()).toDto();
+        return new BoardDto(boardRepository.save(dto.toEntity()));
     }
 
     @Override
@@ -78,7 +79,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<BoardDto> getPostByTitle(BoardDto dto) {
         return boardRepository.findTop3ByTitle(dto.getTitle()).stream()
-                .map(BoardEntity::toDto)
+                .map(BoardDto::new)
                 .collect(Collectors.toList());
     }
 }

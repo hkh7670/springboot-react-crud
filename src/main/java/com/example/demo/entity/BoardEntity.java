@@ -36,14 +36,4 @@ public class BoardEntity extends BaseTimeEntity {
         this.userId = userId;
     }
 
-    public BoardDto toDto() {
-        return BoardDto.builder()
-                .id(id)
-                .userId(userId)
-                .title(title)
-                .content(content)
-                .regDate(getRegDate())
-                .uptDate(getUptDate())
-                .build();
-    }
 }

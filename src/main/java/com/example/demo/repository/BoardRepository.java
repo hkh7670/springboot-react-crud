@@ -17,12 +17,4 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long>, Board
 
     List<BoardEntity> findTop3ByTitle(String title);
 
-
-    @Query(value = "select new com.example.demo.dto.BoardDto(p.id, p.title, p.content, p.userId, p.regDate, p.uptDate) " +
-            "from BoardEntity p ")
-    Page<BoardDto> postPageResponse(Pageable pageable);
-//    @Query(value = "select new com.example.demo.dto.PostDto(p.title, p.content) "
-//            + "from PostEntity p"
-//    )
-//    List<PostDto> findAll();
 }

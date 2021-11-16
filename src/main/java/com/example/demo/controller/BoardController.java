@@ -3,12 +3,13 @@ package com.example.demo.controller;
 import com.example.demo.dto.BoardDto;
 import com.example.demo.service.BoardService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/api/board")
 public class BoardController {
 

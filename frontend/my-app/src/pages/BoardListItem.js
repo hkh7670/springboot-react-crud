@@ -1,6 +1,8 @@
 import React, { Fragment } from "react";
+import { Link, Route } from "react-router-dom";
+import BoardView from "./BoardView"
 
-function TableContents(props) {
+function BoardListItem(props) {
     const { content, tableHeaderLength } = props;
     return (
         <Fragment>
@@ -9,9 +11,10 @@ function TableContents(props) {
                     <Fragment>
                         <tr>
                             <td>{i + 1}</td>
+                            {/*<td>{item.title}</td>*/}
+                            <Link to={{pathname: `/view/${item.id}`}}>{item.title}</Link>
+                            {/*<td>{item.content}</td>*/}
                             <td>{item.userId}</td>
-                            <td>{item.title}</td>
-                            <td>{item.content}</td>
                             <td>{item.regDate}</td>
                             <td>{item.uptDate}</td>
                         </tr>
@@ -25,4 +28,4 @@ function TableContents(props) {
     )
 }
 
-export default TableContents
+export default BoardListItem
