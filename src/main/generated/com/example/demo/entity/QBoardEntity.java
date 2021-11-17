@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -20,6 +21,8 @@ public class QBoardEntity extends EntityPathBase<BoardEntity> {
     public static final QBoardEntity boardEntity = new QBoardEntity("boardEntity");
 
     public final QBaseTimeEntity _super = new QBaseTimeEntity(this);
+
+    public final ListPath<BoardCommentEntity, QBoardCommentEntity> commentList = this.<BoardCommentEntity, QBoardCommentEntity>createList("commentList", BoardCommentEntity.class, QBoardCommentEntity.class, PathInits.DIRECT2);
 
     public final StringPath content = createString("content");
 

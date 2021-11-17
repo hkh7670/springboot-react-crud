@@ -1,13 +1,21 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.BoardCommentDto;
 import com.example.demo.service.BoardCommentService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@AllArgsConstructor
-@RequestMapping("/board/comment")
+@RequiredArgsConstructor
+@RequestMapping("/api/board/comment")
 public class BoardCommentController {
-//    private final BoardCommentService boardCommentService;
+
+    private final BoardCommentService boardCommentService;
+
+    @PostMapping
+    public ResponseEntity<?> insertComment(@RequestBody BoardCommentDto request) {
+        return ResponseEntity.ok(boardCommentService.insertComment(request));
+    }
 }

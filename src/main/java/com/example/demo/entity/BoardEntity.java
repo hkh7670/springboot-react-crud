@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,6 +17,7 @@ import javax.persistence.*;
 public class BoardEntity extends BaseTimeEntity {
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -28,12 +30,17 @@ public class BoardEntity extends BaseTimeEntity {
     @Column
     private String userId;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "POST_ID")
+    private List<BoardCommentEntity> commentList;
+
     @Builder
-    public BoardEntity(Long id, String title, String content, String userId) {
+    public BoardEntity(Long id, String title, String content, String userId, List<BoardCommentEntity> commentList) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.userId = userId;
+        this.commentList = commentList;
     }
 
 }

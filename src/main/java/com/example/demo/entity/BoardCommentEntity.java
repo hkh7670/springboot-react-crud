@@ -23,7 +23,7 @@ public class BoardCommentEntity extends BaseTimeEntity {
     @Column
     private Long depth;
 
-    @Column
+    @Column(name = "POST_ID")
     private Long postId;
 
     @Column
