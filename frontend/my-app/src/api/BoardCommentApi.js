@@ -8,5 +8,5 @@ export const boardCommentApi = {
 }
 
 function insertComment(params) {
-    return api.post(baseUrl, { ...params });
+    return api.post(baseUrl, params);
 }

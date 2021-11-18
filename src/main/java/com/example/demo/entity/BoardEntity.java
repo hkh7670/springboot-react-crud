@@ -30,17 +30,16 @@ public class BoardEntity extends BaseTimeEntity {
     @Column
     private String userId;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    /*@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "POST_ID")
-    private List<BoardCommentEntity> commentList;
+    private List<BoardCommentEntity> commentList;*/
 
     @Builder
-    public BoardEntity(Long id, String title, String content, String userId, List<BoardCommentEntity> commentList) {
+    public BoardEntity(Long id, String title, String content, String userId) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.userId = userId;
-        this.commentList = commentList;
     }
 
 }

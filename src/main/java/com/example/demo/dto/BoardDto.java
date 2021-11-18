@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.entity.BoardCommentEntity;
 import com.example.demo.entity.BoardEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,12 +27,23 @@ public class BoardDto extends PagingRequest {
 
     }
 
+    @Builder
+    public BoardDto(BoardEntity entity, List<BoardCommentEntity> boardCommentEntities) {
+        this.id = entity.getId();
+        this.title = entity.getTitle();
+        this.content = entity.getContent();
+        this.userId = entity.getUserId();
+        this.commentList = boardCommentEntities.stream().map(item -> new BoardCommentDto(item)).collect(Collectors.toList());
+        this.regDate = entity.getRegDate() != null ? entity.getRegDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
+        this.uptDate = entity.getUptDate() != null ? entity.getUptDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
+    }
+
     public BoardDto(BoardEntity entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.userId = entity.getUserId();
-        this.commentList = entity.getCommentList().stream().map(BoardCommentDto::new).collect(Collectors.toList());
+        // this.commentList = entity.getCommentList().stream().map(BoardCommentDto::new).collect(Collectors.toList());
         this.regDate = entity.getRegDate() != null ? entity.getRegDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
         this.uptDate = entity.getUptDate() != null ? entity.getUptDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
     }

@@ -1,8 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.BoardCommentDto;
 import com.example.demo.dto.BoardDto;
 import com.example.demo.dto.PageBaseResponse;
+import com.example.demo.entity.BoardCommentEntity;
 import com.example.demo.entity.BoardEntity;
+import com.example.demo.repository.BoardCommentRepository;
 import com.example.demo.repository.BoardRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,7 @@ import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -23,6 +27,7 @@ import java.util.stream.Collectors;
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+    private final BoardCommentRepository boardCommentRepository;
 
     @Override
     public Page<BoardDto> getPostList(BoardDto boardDto, Pageable pageable) {
@@ -51,7 +56,10 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardDto getPostOne(Long seq) {
         BoardEntity entity = boardRepository.findById(seq).orElseThrow(NullPointerException::new);
-        return new BoardDto(entity);
+        return BoardDto.builder()
+                .entity(entity)
+                .boardCommentEntities(boardCommentRepository.findByPostIdAndParentCommentIdIsNull(seq))
+                .build();
     }
 
     @Override
