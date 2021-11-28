@@ -26,15 +26,15 @@ public class BoardCommentDto {
     private Long childCommentCnt;
 
     @Builder
-    public BoardCommentDto(Long id, Long parentCommentId, Long depth, Long postId, Long userId, String content, LocalDateTime regDate, LocalDateTime uptDate, Long childCommentCnt) {
-        this.id = id;
-        this.parentCommentId = parentCommentId;
-        this.depth = depth;
-        this.postId = postId;
-        this.userId = userId;
-        this.content = content;
-        this.regDate = regDate != null ? regDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
-        this.uptDate = uptDate != null ? uptDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
+    public BoardCommentDto(BoardCommentEntity entity, Long childCommentCnt) {
+        this.id = entity.getId();
+        this.parentCommentId = entity.getParentCommentId();
+        this.depth = entity.getDepth();
+        this.postId = entity.getPostId();
+        this.userId = entity.getUserId();
+        this.content = entity.getContent();
+        this.regDate = entity.getRegDate() != null ? entity.getRegDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
+        this.uptDate = entity.getUptDate() != null ? entity.getUptDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
         this.childCommentCnt = childCommentCnt;
     }
 
