@@ -23,9 +23,10 @@ public class BoardCommentDto {
     private String content;
     private String regDate;
     private String uptDate;
+    private Long childCommentCnt;
 
     @Builder
-    public BoardCommentDto(Long id, Long parentCommentId, Long depth, Long postId, Long userId, String content, LocalDateTime regDate, LocalDateTime uptDate) {
+    public BoardCommentDto(Long id, Long parentCommentId, Long depth, Long postId, Long userId, String content, LocalDateTime regDate, LocalDateTime uptDate, Long childCommentCnt) {
         this.id = id;
         this.parentCommentId = parentCommentId;
         this.depth = depth;
@@ -34,6 +35,7 @@ public class BoardCommentDto {
         this.content = content;
         this.regDate = regDate != null ? regDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
         this.uptDate = uptDate != null ? uptDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
+        this.childCommentCnt = childCommentCnt;
     }
 
     public BoardCommentDto(BoardCommentEntity entity) {

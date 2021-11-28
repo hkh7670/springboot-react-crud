@@ -107,7 +107,7 @@ task copyWebApp(type: Copy) {
 //    into "src/main/resources/static"
 }
 
-// copyWebApp.dependsOn(appNpmInstall)
+copyWebApp.dependsOn(appNpmInstall)
 compileJava.dependsOn(copyWebApp)
 // react build 끝
 

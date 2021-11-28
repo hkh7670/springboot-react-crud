@@ -57,7 +57,7 @@ function BoardView() {
                 {post.commentList != null && post.commentList.map((item, i) => {
                     return (
                         <li>
-                            {item.content} {"(" + item.regDate + ")"}
+                            {item.content} {"(" + item.regDate + ")"} {"대댓글: " + item.childCommentCnt}
                         </li>
                     )
                 })}

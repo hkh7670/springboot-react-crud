@@ -13,21 +13,16 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
-//import static com.example.demo.entity.QPostEntity.postEntity;
 
 @Repository
 public class BoardRepositoryCustomImpl extends QuerydslRepositorySupport implements BoardRepositoryCustom {
-    @PersistenceContext
-    private EntityManager entityManager;
+
     private final QBoardEntity boardEntity = QBoardEntity.boardEntity;
     private final JPAQueryFactory jpaQueryFactory;
 
-    public BoardRepositoryCustomImpl(JPAQueryFactory jpaQueryFactory, EntityManager entityManager) {
+    public BoardRepositoryCustomImpl(JPAQueryFactory jpaQueryFactory) {
         super(BoardEntity.class);
-        this.entityManager = entityManager;
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
