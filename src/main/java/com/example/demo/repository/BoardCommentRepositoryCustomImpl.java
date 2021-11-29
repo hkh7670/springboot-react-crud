@@ -27,11 +27,20 @@ public class BoardCommentRepositoryCustomImpl implements BoardCommentRepositoryC
 
         JPAQuery<BoardCommentDto> query = jpaQueryFactory
                 .select(Projections.constructor
-                        (BoardCommentDto.class, boardCommentEntity, boardChildCommentEntity.parentCommentId.count()))
+                        (BoardCommentDto.class,
+                                boardCommentEntity,
+                                boardChildCommentEntity.parentCommentId.count()))
                 .from(boardCommentEntity)
                 .leftJoin(boardChildCommentEntity).on(boardChildCommentEntity.parentCommentId.eq(boardCommentEntity.id).and(boardChildCommentEntity.parentCommentId.isNotNull()))
-                .where(boardCommentEntity.postId.eq(postId), boardCommentEntity.parentCommentId.isNull())
-                .groupBy(boardCommentEntity.id, boardCommentEntity.parentCommentId, boardCommentEntity.depth, boardCommentEntity.postId, boardCommentEntity.userId, boardCommentEntity.content)
+                .where(
+                        boardCommentEntity.postId.eq(postId),
+                        boardCommentEntity.parentCommentId.isNull())
+                .groupBy(boardCommentEntity.id,
+                        boardCommentEntity.parentCommentId,
+                        boardCommentEntity.depth,
+                        boardCommentEntity.postId,
+                        boardCommentEntity.userId,
+                        boardCommentEntity.content)
                 .orderBy(boardCommentEntity.regDate.desc());
         return query.fetch();
     }

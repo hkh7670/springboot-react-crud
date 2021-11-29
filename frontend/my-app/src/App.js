@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import './App.css';
-import { boardApi } from "./api/BoardApi";
+import { BoardApi } from "./api/BoardApi";
 import Pagination from "./common/Pagination";
 import TableHeader from "./common/TableHeader";
 import BoardListItem from "./pages/BoardListItem";

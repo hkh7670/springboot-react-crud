@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import '../App.css';
-import { boardApi } from "../api/BoardApi";
+import { BoardApi } from "../api/BoardApi";
 import Pagination from "../common/Pagination";
 import TableHeader from "../common/TableHeader";
 import BoardListItem from "./BoardListItem";
@@ -58,7 +58,7 @@ function BoardList() {
     }
 
     function getPostList() {
-        boardApi.getPostList(searchParams).then((res) => {
+        BoardApi.getPostList(searchParams).then((res) => {
             console.log("res: ", res);
             setListInfo({ value: res.data, totalCnt: res.data.totalElements });
         }).catch((err) => {
@@ -69,7 +69,7 @@ function BoardList() {
     function handleFormSubmit() {
         const _searchParams = searchParams;
         _searchParams.page = 0;
-        boardApi.getPostList(_searchParams).then((res) => {
+        BoardApi.getPostList(_searchParams).then((res) => {
             console.log("res: ", res);
             setListInfo({ value: res.data, totalCnt: res.data.totalElements });
         }).catch((err) => {

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface BoardCommentRepository extends JpaRepository<BoardCommentEntity, Long>, BoardCommentRepositoryCustom {
-
+    List<BoardCommentEntity> findByParentCommentId(Long seq);
 }

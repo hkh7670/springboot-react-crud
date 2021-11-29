@@ -28,3 +28,8 @@ code {
 .text_center {
   text-align: center;
 }
+
+.comment {
+  cursor: pointer;
+  color: blue;
+}
