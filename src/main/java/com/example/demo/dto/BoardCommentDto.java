@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.core.annotation.Order;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,7 +18,6 @@ import java.time.format.DateTimeFormatter;
 public class BoardCommentDto {
     private Long id;
     private Long parentCommentId;
-    private Long depth;
     private Long postId;
     private Long userId;
     private String content;
@@ -29,7 +29,6 @@ public class BoardCommentDto {
     public BoardCommentDto(BoardCommentEntity entity, Long childCommentCnt) {
         this.id = entity.getId();
         this.parentCommentId = entity.getParentCommentId();
-        this.depth = entity.getDepth();
         this.postId = entity.getPostId();
         this.userId = entity.getUserId();
         this.content = entity.getContent();
@@ -41,7 +40,6 @@ public class BoardCommentDto {
     public BoardCommentDto(BoardCommentEntity entity) {
         this.id = entity.getId();
         this.parentCommentId = entity.getParentCommentId();
-        this.depth = entity.getDepth();
         this.postId = entity.getPostId();
         this.userId = entity.getUserId();
         this.content = entity.getContent();
@@ -52,7 +50,6 @@ public class BoardCommentDto {
     public BoardCommentEntity toEntity() {
         return BoardCommentEntity.builder()
                 .parentCommentId(parentCommentId)
-                .depth(depth)
                 .postId(postId)
                 .userId(userId)
                 .content(content)

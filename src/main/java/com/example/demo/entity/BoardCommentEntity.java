@@ -20,9 +20,6 @@ public class BoardCommentEntity extends BaseTimeEntity {
     @Column
     private Long parentCommentId;
 
-    @Column
-    private Long depth;
-
     @Column(name = "POST_ID")
     private Long postId;
 
@@ -33,10 +30,9 @@ public class BoardCommentEntity extends BaseTimeEntity {
     private String content;
 
     @Builder
-    public BoardCommentEntity(Long id, Long parentCommentId, Long depth, Long postId, Long userId, String content) {
+    public BoardCommentEntity(Long id, Long parentCommentId, Long postId, Long userId, String content) {
         this.id = id;
         this.parentCommentId = parentCommentId;
-        this.depth = depth;
         this.postId = postId;
         this.userId = userId;
         this.content = content;

@@ -23,8 +23,6 @@ public class QBoardCommentEntity extends EntityPathBase<BoardCommentEntity> {
 
     public final StringPath content = createString("content");
 
-    public final NumberPath<Long> depth = createNumber("depth", Long.class);
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Long> parentCommentId = createNumber("parentCommentId", Long.class);

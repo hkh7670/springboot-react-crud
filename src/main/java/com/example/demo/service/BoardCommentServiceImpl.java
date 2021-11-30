@@ -22,7 +22,7 @@ public class BoardCommentServiceImpl implements BoardCommentService {
 
     @Override
     public List<BoardCommentDto> getChildCommentList(Long seq) {
-        List<BoardCommentEntity> response = boardCommentRepository.findByParentCommentId(seq);
+        List<BoardCommentEntity> response = boardCommentRepository.findByParentCommentIdOrderByRegDateDesc(seq);
         List<BoardCommentDto> result = new ArrayList<>();
         response.forEach(item -> {
             result.add(

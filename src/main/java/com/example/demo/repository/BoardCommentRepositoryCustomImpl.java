@@ -37,7 +37,6 @@ public class BoardCommentRepositoryCustomImpl implements BoardCommentRepositoryC
                         boardCommentEntity.parentCommentId.isNull())
                 .groupBy(boardCommentEntity.id,
                         boardCommentEntity.parentCommentId,
-                        boardCommentEntity.depth,
                         boardCommentEntity.postId,
                         boardCommentEntity.userId,
                         boardCommentEntity.content)
