@@ -1,0 +1,12 @@
+area:
+  info:
+    list:
+        - cd: '00000000'
+          cdNm: 경기도
+          parentCd: '00000000'
+        - cd: '11111111'
+          cdNm: 인천
+          parentCd: '11111111'
+        - cd: '22222222'
+          cdNm: 부산
+          parentcd: '22222222'
