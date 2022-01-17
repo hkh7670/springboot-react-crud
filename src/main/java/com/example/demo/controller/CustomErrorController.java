@@ -5,11 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class RootController implements ErrorController {
+public class CustomErrorController implements ErrorController {
 
     @GetMapping("/error")
     public String redirectRoot() {
-        return "index.html";
+        return "index";
     }
 
     @Override
