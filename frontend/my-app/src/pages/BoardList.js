@@ -41,7 +41,7 @@ function BoardList() {
         }
     }, [searchParams.page, searchParams.size])
 
-    function setListSize(e) {
+    const setListSize = (e) => {
         setSearchParams({
             ...searchParams,
             size: e.target.value,
@@ -49,7 +49,7 @@ function BoardList() {
         })
     }
 
-    function handleSearchParams(e) {
+    const handleSearchParams = (e) => {
         const { name, value } = e.target;
         setSearchParams({
             ...searchParams,
@@ -57,7 +57,7 @@ function BoardList() {
         })
     }
 
-    function getPostList() {
+    const getPostList = () => {
         BoardApi.getPostList(searchParams).then((res) => {
             console.log("res: ", res);
             setListInfo({ value: res.data, totalCnt: res.data.totalElements });
@@ -66,7 +66,7 @@ function BoardList() {
         })
     }
 
-    function handleFormSubmit() {
+    const handleFormSubmit = () => {
         const _searchParams = searchParams;
         _searchParams.page = 0;
         BoardApi.getPostList(_searchParams).then((res) => {
@@ -77,7 +77,7 @@ function BoardList() {
         })
     }
 
-    function handleEnterKeyPress(e) {
+    const handleEnterKeyPress = (e) => {
         if (e.key === 'Enter') {
             handleFormSubmit();
         }

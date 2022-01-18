@@ -29,7 +29,7 @@ function BoardView() {
         console.log("post: ", post);
     }, [post])
 
-    function handleSearchParams(e) {
+    const handleSearchParams = (e) => {
         const { name, value } = e.target;
         setComment({
             ...comment,
@@ -37,7 +37,7 @@ function BoardView() {
         })
     }
 
-    function insertComment() {
+    const insertComment = () => {
         if (commonUtil.isEmpty(comment.content)) {
             alert("댓글을 입력 후 추가버튼을 클릭해주세요.");
             return;
@@ -55,7 +55,7 @@ function BoardView() {
         })
     }
 
-    function insertChildCommentToggle(id, childCommentInput) {
+    const insertChildCommentToggle = (id, childCommentInput) => {
         let _post = post;
         let toggle;
         if(!!childCommentInput) {
@@ -73,7 +73,7 @@ function BoardView() {
         setPost({ ..._post });
     }
 
-    function insertChildComment(id) {
+    const insertChildComment = (id) => {
         console.log(id);
         const content = document.getElementById(id).value;
         console.log(content);
@@ -99,7 +99,7 @@ function BoardView() {
         })
     }
 
-    function getChildCommentList(id, isRenderedChildComment) {
+    const getChildCommentList = (id, isRenderedChildComment) => {
         let _post = post;
         if (!!isRenderedChildComment) {
             for (let i = 0; i < _post.commentList.length; i++) {
