@@ -3,13 +3,13 @@ import React, { Fragment, useState } from "react";
 function Pagination(props) {
     const [pageCnt, setPageCnt] = useState(5);
     const { totalPagesValues, searchParams, setSearchParams } = props;
-    function handlePageMove(type) {
+    const handlePageMove = (type) => {
         let page;
-        if(totalPagesValues.length <= 0) {
+        if (totalPagesValues.length <= 0) {
             page = 0;
         }
         else {
-            switch (type){
+            switch (type) {
                 case "prevEnd":
                     page = 0;
                     break;
@@ -33,7 +33,7 @@ function Pagination(props) {
         })
     }
 
-    function setPages(page) {
+    const setPages = (page) => {
         setSearchParams({
             ...searchParams,
             page: page
