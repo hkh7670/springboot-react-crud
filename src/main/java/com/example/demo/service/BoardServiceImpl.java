@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
@@ -55,7 +56,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public BoardDto getPostOne(Long seq) {
-        BoardEntity entity = boardRepository.findById(seq).orElseThrow(NullPointerException::new);
+        BoardEntity entity = boardRepository.findById(seq).orElseThrow(() -> new CustomException(ErrorCode.RESOURCE_NOT_FOUND, "boardSeq", seq.toString()));
         return BoardDto.builder()
                 .entity(entity)
                 .boardCommentEntities(boardCommentRepository.findByPostIdAndParentCommentIdIsNull(seq))
@@ -71,7 +72,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long updatePost(BoardDto dto, Long id) {
-        BoardEntity entity = boardRepository.findById(id).orElseThrow(NullPointerException::new);
+        BoardEntity entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.RESOURCE_NOT_FOUND, "boardSeq", id.toString()));
         entity.setTitle(dto.getTitle());
         entity.setContent(dto.getContent());
         return boardRepository.save(entity).getId();
@@ -80,7 +81,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void deletePost(Long seq) {
-        BoardEntity entity = boardRepository.findById(seq).orElseThrow(NullPointerException::new);
+        BoardEntity entity = boardRepository.findById(seq).orElseThrow(() -> new CustomException(ErrorCode.RESOURCE_NOT_FOUND, "boardSeq", seq.toString()));
         boardRepository.delete(entity);
     }
 
