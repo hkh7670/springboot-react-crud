@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.MybatisBoardMapper">
+
+    <select id="getPostAllUnderScore" resultType="com.example.demo.dto.BoardDtoUnderScore">
+        SELECT
+            ID
+            , TITLE
+            , CONTENT
+            , USER_ID
+            , REG_DATE
+            , UPT_DATE
+        FROM PORTAL_DB.BOARD
+    </select>
+
+    <select id="getPostAllCamel" resultType="com.example.demo.dto.BoardDtoCamel">
+        SELECT
+            ID
+             , TITLE
+             , CONTENT
+             , USER_ID
+             , REG_DATE
+             , UPT_DATE
+        FROM PORTAL_DB.BOARD
+    </select>
+
+</mapper>

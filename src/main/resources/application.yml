@@ -12,7 +12,6 @@ spring:
   mvc:
     view:
       suffix: .html
-
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
