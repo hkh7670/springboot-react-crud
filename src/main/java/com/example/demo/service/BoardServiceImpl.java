@@ -5,20 +5,20 @@ import com.example.demo.dto.BoardDto;
 import com.example.demo.dto.PageBaseResponse;
 import com.example.demo.entity.BoardCommentEntity;
 import com.example.demo.entity.BoardEntity;
+import com.example.demo.exception.CustomException;
+import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.BoardCommentRepository;
 import com.example.demo.repository.BoardRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -43,23 +43,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public PageBaseResponse getPostListQueryDsl(BoardDto boardDto) {
-        PageBaseResponse response = new PageBaseResponse();
-        List<BoardDto> dbResponse = boardRepository.findByTitleByQueryDsl2(boardDto);
-        response.getData().put("contents", dbResponse);
-        Map<String, Integer> pagination = new HashMap<>();
-        pagination.put("page", boardDto.getPage());
-        pagination.put("totalCount", dbResponse.size());
-        response.getData().put("pagination", pagination);
-        return response;
-    }
-
-    @Override
     public BoardDto getPostOne(Long seq) {
         BoardEntity entity = boardRepository.findById(seq).orElseThrow(() -> new CustomException(ErrorCode.RESOURCE_NOT_FOUND, "boardSeq", seq.toString()));
+        //return new BoardDto(entity, boardCommentRepository.findBoardCommentList(seq));
         return BoardDto.builder()
                 .entity(entity)
-                .boardCommentEntities(boardCommentRepository.findByPostIdAndParentCommentIdIsNull(seq))
+                .boardCommentList(boardCommentRepository.findBoardCommentList(seq))
                 .build();
     }
 
@@ -73,8 +62,7 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     public Long updatePost(BoardDto dto, Long id) {
         BoardEntity entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.RESOURCE_NOT_FOUND, "boardSeq", id.toString()));
-        entity.setTitle(dto.getTitle());
-        entity.setContent(dto.getContent());
+        entity.updatePost(dto);
         return boardRepository.save(entity).getId();
     }
 
@@ -90,5 +78,35 @@ public class BoardServiceImpl implements BoardService {
         return boardRepository.findTop3ByTitle(dto.getTitle()).stream()
                 .map(BoardDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void setPostList() {
+        List<BoardEntity> boardEntityList = boardRepository.findByIdIn(Arrays.asList(95L));
+        log.info(" >>> boardEntityListSize : " + boardEntityList.size());
+        for (BoardEntity boardEntity : boardEntityList) {
+            List<BoardCommentEntity> boardCommentEntityList = boardEntity.getCommentList();
+            log.info(" >>> boardCommentEntityListSize : " + boardCommentEntityList.size());
+            for (BoardCommentEntity boardCommentEntity : boardCommentEntityList) {
+                boardCommentEntity.setContent("comment seq : " + boardCommentEntity.getId() + " 테스트");
+                /*if (boardCommentEntity.getParentCommentId() != null) {
+
+                }*/
+            }
+        }
+        boardRepository.saveAll(boardEntityList);
+    }
+
+    @Override
+    public List<BoardEntity> getPostAll() {
+        List<BoardEntity> boardEntityList = boardRepository.findByIdIn(Arrays.asList(95L));
+        return boardEntityList;
+    }
+
+    @Override
+    public List<BoardCommentEntity> getCommentList() {
+        List<BoardCommentEntity> boardCommentEntityList = boardCommentRepository.findByPostId(95L);
+        return boardCommentEntityList;
     }
 }
