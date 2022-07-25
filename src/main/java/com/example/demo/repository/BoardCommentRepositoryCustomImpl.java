@@ -23,7 +23,7 @@ public class BoardCommentRepositoryCustomImpl implements BoardCommentRepositoryC
     }
 
     @Override
-    public List<BoardCommentDto> findByPostIdAndParentCommentIdIsNull(Long postId) {
+    public List<BoardCommentDto> findBoardCommentList(Long postId) {
 
         JPAQuery<BoardCommentDto> query = jpaQueryFactory
                 .select(Projections.constructor

@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface BoardCommentRepositoryCustom  {
-    List<BoardCommentDto> findByPostIdAndParentCommentIdIsNull(Long postId);
+    List<BoardCommentDto> findBoardCommentList(Long postId);
 
 }

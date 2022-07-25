@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface BoardCommentRepository extends JpaRepository<BoardCommentEntity, Long>, BoardCommentRepositoryCustom {
     List<BoardCommentEntity> findByParentCommentIdOrderByRegDateDesc(Long seq);
+
+    List<BoardCommentEntity> findByPostId(Long id);
 }

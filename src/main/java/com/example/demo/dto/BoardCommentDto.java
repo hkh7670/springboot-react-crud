@@ -1,16 +1,11 @@
 package com.example.demo.dto;
 
 import com.example.demo.entity.BoardCommentEntity;
-import com.example.demo.entity.BoardEntity;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.example.demo.util.StringUtil;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.core.annotation.Order;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -32,8 +27,8 @@ public class BoardCommentDto {
         this.postId = entity.getPostId();
         this.userId = entity.getUserId();
         this.content = entity.getContent();
-        this.regDate = entity.getRegDate() != null ? entity.getRegDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
-        this.uptDate = entity.getUptDate() != null ? entity.getUptDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
+        this.regDate = StringUtil.localDateTimeToString(entity.getRegDate());
+        this.uptDate = StringUtil.localDateTimeToString(entity.getUptDate());
         this.childCommentCnt = childCommentCnt;
     }
 
@@ -43,8 +38,8 @@ public class BoardCommentDto {
         this.postId = entity.getPostId();
         this.userId = entity.getUserId();
         this.content = entity.getContent();
-        this.regDate = entity.getRegDate() != null ? entity.getRegDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
-        this.uptDate = entity.getUptDate() != null ? entity.getUptDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
+        this.regDate = StringUtil.localDateTimeToString(entity.getRegDate());
+        this.uptDate = StringUtil.localDateTimeToString(entity.getUptDate());
     }
 
     public BoardCommentEntity toEntity() {

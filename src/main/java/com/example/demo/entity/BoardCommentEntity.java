@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.dto.BoardCommentDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class BoardCommentEntity extends BaseTimeEntity {
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -29,6 +31,10 @@ public class BoardCommentEntity extends BaseTimeEntity {
     @Column
     private String content;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "POST_ID", insertable = false, updatable = false)
+    private BoardEntity boardEntity;
+
     @Builder
     public BoardCommentEntity(Long id, Long parentCommentId, Long postId, Long userId, String content) {
         this.id = id;
@@ -36,5 +42,9 @@ public class BoardCommentEntity extends BaseTimeEntity {
         this.postId = postId;
         this.userId = userId;
         this.content = content;
+    }
+
+    public void updateComment(BoardCommentDto boardCommentDto) {
+        this.content = boardCommentDto.getContent();
     }
 }

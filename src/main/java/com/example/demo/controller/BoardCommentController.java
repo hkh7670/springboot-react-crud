@@ -19,6 +19,11 @@ public class BoardCommentController {
         return ResponseEntity.ok(boardCommentService.insertComment(request));
     }
 
+    @PutMapping
+    public ResponseEntity<?> updateComment(@RequestBody BoardCommentDto request) {
+        return ResponseEntity.ok(boardCommentService.updateComment(request));
+    }
+
     @GetMapping("/child/{seq}")
     public ResponseEntity<?> getChildCommentList(@PathVariable Long seq) {
         return ResponseEntity.ok(boardCommentService.getChildCommentList(seq));

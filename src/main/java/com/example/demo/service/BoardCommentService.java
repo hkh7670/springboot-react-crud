@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface BoardCommentService {
     BoardCommentDto insertComment(BoardCommentDto request);
+    BoardCommentDto updateComment(BoardCommentDto request);
 
     List<BoardCommentDto> getChildCommentList(Long seq);
 }

@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @Table(name = "BOARD")
 @NoArgsConstructor
 public class BoardEntity extends BaseTimeEntity {
@@ -30,9 +30,8 @@ public class BoardEntity extends BaseTimeEntity {
     @Column
     private String userId;
 
-    /*@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "POST_ID")
-    private List<BoardCommentEntity> commentList;*/
+    @OneToMany(mappedBy = "boardEntity", orphanRemoval = true)
+    private List<BoardCommentEntity> commentList = new ArrayList<>();
 
     @Builder
     public BoardEntity(Long id, String title, String content, String userId) {
@@ -42,4 +41,8 @@ public class BoardEntity extends BaseTimeEntity {
         this.userId = userId;
     }
 
+    public void updatePost(BoardDto dto) {
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
+    }
 }

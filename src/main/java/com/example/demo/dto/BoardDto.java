@@ -2,6 +2,7 @@ package com.example.demo.dto;
 
 import com.example.demo.entity.BoardCommentEntity;
 import com.example.demo.entity.BoardEntity;
+import com.example.demo.util.StringUtil;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,12 +10,13 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class BoardDto extends PagingRequest {
+public class BoardDto {
     private Long id;
     private String title;
     private String content;
@@ -28,14 +30,14 @@ public class BoardDto extends PagingRequest {
     }
 
     @Builder
-    public BoardDto(BoardEntity entity, List<BoardCommentDto> boardCommentEntities) {
+    public BoardDto(BoardEntity entity, List<BoardCommentDto> boardCommentList) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.userId = entity.getUserId();
-        this.commentList = boardCommentEntities;
-        this.regDate = entity.getRegDate() != null ? entity.getRegDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
-        this.uptDate = entity.getUptDate() != null ? entity.getUptDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
+        this.commentList = boardCommentList;
+        this.regDate = StringUtil.localDateTimeToString(entity.getRegDate());
+        this.uptDate = StringUtil.localDateTimeToString(entity.getUptDate());
     }
 
     public BoardDto(BoardEntity entity) {
@@ -43,9 +45,9 @@ public class BoardDto extends PagingRequest {
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.userId = entity.getUserId();
-        // this.commentList = entity.getCommentList().stream().map(BoardCommentDto::new).collect(Collectors.toList());
-        this.regDate = entity.getRegDate() != null ? entity.getRegDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
-        this.uptDate = entity.getUptDate() != null ? entity.getUptDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
+        this.commentList = entity.getCommentList().stream().map(BoardCommentDto::new).collect(Collectors.toList());
+        this.regDate = StringUtil.localDateTimeToString(entity.getRegDate());
+        this.uptDate = StringUtil.localDateTimeToString(entity.getUptDate());
     }
 
     public BoardDto(Long id, String title, String content, String userId, LocalDateTime regDate, LocalDateTime uptDate) {
@@ -53,10 +55,8 @@ public class BoardDto extends PagingRequest {
         this.title = title;
         this.content = content;
         this.userId = userId;
-        this.regDate = regDate != null ? regDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
-        ;
-        this.uptDate = uptDate != null ? uptDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) : "-";
-        ;
+        this.regDate = StringUtil.localDateTimeToString(regDate);
+        this.uptDate = StringUtil.localDateTimeToString(uptDate);
     }
 
     public BoardEntity toEntity() {

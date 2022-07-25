@@ -1,12 +1,18 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.BoardDto;
+import com.example.demo.entity.BoardCommentEntity;
+import com.example.demo.entity.BoardEntity;
 import com.example.demo.service.BoardService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,22 +23,22 @@ public class BoardController {
 
     // 게시물 조회
     @GetMapping
-    public ResponseEntity<?> getPostList(BoardDto boardDto, Pageable pageable) {
+    public ResponseEntity<Page<BoardDto>> getPostList(BoardDto boardDto, Pageable pageable) {
         return ResponseEntity.ok(boardService.getPostList(boardDto, pageable));
     }
 
     @GetMapping("/{seq}")
-    public ResponseEntity<?> getPostOne(@PathVariable Long seq) {
+    public ResponseEntity<BoardDto> getPostOne(@PathVariable Long seq) {
         return ResponseEntity.ok(boardService.getPostOne(seq));
     }
 
     @PostMapping
-    public ResponseEntity<?> insertPost(BoardDto dto) {
+    public ResponseEntity<BoardDto> insertPost(BoardDto dto) {
         return ResponseEntity.ok(boardService.insertPost(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updatePost(BoardDto dto, @PathVariable Long id) {
+    public ResponseEntity<Long> updatePost(BoardDto dto, @PathVariable Long id) {
         return ResponseEntity.ok(boardService.updatePost(dto, id));
     }
 
@@ -43,13 +49,24 @@ public class BoardController {
     }
 
     @GetMapping("/queryDsl")
-    public ResponseEntity<?> getPostListQueryDsl(BoardDto boardDto, Pageable pageable) {
+    public ResponseEntity<PageImpl<BoardDto>> getPostListQueryDsl(BoardDto boardDto, Pageable pageable) {
         return ResponseEntity.ok(boardService.getPostListQueryDsl(boardDto, pageable));
     }
 
 
     @GetMapping("/title")
-    public ResponseEntity<?> getPostByTitle(BoardDto dto) {
+    public ResponseEntity<List<BoardDto>> getPostByTitle(BoardDto dto) {
         return ResponseEntity.ok(boardService.getPostByTitle(dto));
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<List<BoardEntity>> transactionTest() {
+        boardService.setPostList();
+        return ResponseEntity.ok(boardService.getPostAll());
+    }
+
+    @GetMapping("/test/comment")
+    public ResponseEntity<List<BoardCommentEntity>> manyToOneTest() {
+        return ResponseEntity.ok(boardService.getCommentList());
     }
 }
